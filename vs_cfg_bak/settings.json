@@ -9,6 +9,6 @@
     "files.insertFinalNewline": true,
     "editor.renderIndentGuides": false,
     "window.zoomLevel": 0,
-    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe"，
+    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
     "python.linting.pylintEnabled": false
 }
