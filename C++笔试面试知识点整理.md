@@ -2,8 +2,6 @@
 
 基类指针可以指向派生类的对象（多态性），如果删除该指针delete []p；就会调用该指针指向的派生类析构函数，而派生类的析构函数又自动调用基类的析构函数，这样整个派生类的对象完全被释放。如果析构函数不被声明成虚函数，则编译器实施静态绑定，在删除基类指针时，只会调用基类的析构函数而不调用派生类析构函数，这样就会造成派生类对象析构不完全。所以，将析构函数声明为虚函数是十分必要的。
 
-### [常见C++笔试题](http://blog.csdn.net/dongfengsun/article/details/1541926)
-
 ### gdb调试命令
 
 step和next的区别？
@@ -132,93 +130,64 @@ int* const p; const指针
 
 ### 互斥锁
 
+```c
 pthread_mutex_t m_mutex;
-
 pthread_mutex_init(&m_mutex, NULL)等效于pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER
-
 pthread_mutex_lock(&m_mutex);
-
 pthread_mutex_unlock(&m_mutex)
-
 pthread_mutex_destroy(&m_mutex)
-
 int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg);
-
- 
-
 bool g_flag = false;
-
 void* t1(void* arg)
-
 {
-
   cout << "create t1 thread success" << endl;
-
   pthread_mutex_lock(&m_mutex);
-
   g_flag = true;
-
-pthread_mutex_unlock(&m_mutex);
-
+  pthread_mutex_unlock(&m_mutex);
 }
 
 void* t2(void* arg)
-
 {
-
   cout << "create t2 thread success" << endl;
-
   pthread_mutex_lock(&m_mutex);
-
   g_flag = false;
-
-pthread_mutex_unlock(&m_mutex);
-
+  pthread_mutex_unlock(&m_mutex);
 }
 
 int main(int argc, char* argv[])
-
 {
-
   pthread_t tid1, tid2;
-
   pthread_create(&tid1, NULL, t1, NULL);
-
   sleep(2);
-
   pthread_create(&tid2, NULL, t2, NULL);
-
   pthread_join(tid1, NULL);
-
   pthread_join(tid2, NULL);
-
 }
+```
 
 
 
-大小端转换
+### 大小端转换
 
-\#define BigLittleSwap32(A) ((((uint32)(A) & 0xff000000) >> 24) | \
+```c
+#define BigLittleSwap32(A) ((((uint32)(A) & 0xff000000) >> 24) | \
+                     (((uint32)(A) & 0x00ff0000) >> 8) | \
+                     (((uint32)(A) & 0x0000ff00) << 8) | \
+                     (((uint32)(A) & 0x000000ff) << 24))
+```
 
-​                         (((uint32)(A) & 0x00ff0000) >> 8) | \
 
-​                         (((uint32)(A) & 0x0000ff00) << 8) | \
-
-​                         (((uint32)(A) & 0x000000ff) << 24))
-
- 
 
 ###  io多路复用
 
 [为什么 IO 多路复用要搭配非阻塞IO]( https://www.zhihu.com/question/37271342)
 
-设置非阻塞io fcntl(sockfd, F_SETFL, O_NONBLOCK); 
+设置非阻塞 `io fcntl(sockfd, F_SETFL, O_NONBLOCK); `
 
 #### select
 
-int select(int nfds, fd_set *readfds, fd_set *writefds,
-
- fd_set *exceptfds, struct timeval *timeout);
+```c
+int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
 
 void FD_CLR(int fd, fd_set *set);
 
@@ -229,44 +198,24 @@ void FD_SET(int fd, fd_set *set);
 void FD_ZERO(fd_set *set);
 
 fd_set rdfds;
-
 struct timeval tv;
-
 int ret;
-
 FD_ZERO(&rdfds);
-
 FD_SET(socket, &rdfds);
-
 tv.tv_sec = 1;
-
 tv.tv_uses = 500;
-
 ret = select (socket + 1, %rdfds, NULL, NULL, &tv);
-
 if(ret < 0) perror (“select”);
-
 else if (ret = = 0) printf(“time out”);
-
-else {
-
- 
-
-​    printf(“ret = %d/n”,ret);
-
- 
-
-​    if(FD_ISSET(socket, &rdfds)){
-
- 
-
-  /* 读取socket句柄里的数据 */
-
- 
-
+else
+{
+	printf(“ret = %d/n”,ret);
+	if(FD_ISSET(socket, &rdfds)){
+  	/* 读取socket句柄里的数据 */
 }注意select函数的第一个参数，是所有加入集合的句柄值的最大那个那个值还要加1.比如我们创建了3个句柄;
+```
 
- 
+
 
 #### poll实现
 
@@ -276,23 +225,20 @@ poll的实现和select非常相似，只是描述fd集合的方式不同，poll�
 
 https://www.cnblogs.com/Anker/archive/2013/08/17/3263780.html
 
-\#include <sys/epoll.h>
-
+```c
+#include <sys/epoll.h>
 int epoll_create(int size);
 
 int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);
 
 int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout);
+```
 
 epoll对文件描述符的操作有两种模式：LT（level trigger）和ET（edge trigger）。LT模式是默认模式，LT模式与ET模式的区别如下：
 
 LT模式：当epoll_wait检测到描述符事件发生并将此事件通知应用程序，应用程序可以不立即处理该事件。下次调用epoll_wait时，会再次响应应用程序并通知此事件。    
 
- 
-
 ET模式：当epoll_wait检测到描述符事件发生并将此事件通知应用程序，应用程序必须立即处理该事件。如果不处理，下次调用epoll_wait时，不会再次响应应用程序并通知此事件。
-
- 
 
 ET模式在很大程度上减少了epoll事件被重复触发的次数，因此效率要比LT模式高。epoll工作在ET模式的时候，
 
@@ -302,23 +248,21 @@ Epoll ET模型下，为什么每次EPOLLIN事件都会带一次EPOLLOUT事件：
 
  
 
-udp套接字 http://blog.csdn.net/chenhanzhun/article/details/41914029
+#### udp套接字
 
-  https://www.cnblogs.com/bleopard/p/4004916.html
+ http://blog.csdn.net/chenhanzhun/article/details/41914029
 
-\#include <sys/socket.h> 
+ https://www.cnblogs.com/bleopard/p/4004916.html
 
-ssize_t sendto(int sockfd, void *buff, size_t nbytes, int flags, 
+```c
+#include <sys/socket.h> 
 
-​        const struct sockaddr *destaddr, socklen_t addrlen); 
+ssize_t sendto(int sockfd, void *buff, size_t nbytes, int flags,  const struct sockaddr *destaddr, socklen_t addrlen); 
 
- 
+ssize_t recvfrom(int sockfd, void *buff, size_t nbytes, int flags,  struct sockaddr *addr, socklen_t *addrlen); 
+```
 
-ssize_t recvfrom(int sockfd, void *buff, size_t nbytes, int flags, 
 
-​        struct sockaddr *addr, socklen_t *addrlen); 
-
- 
 
 ###  网络套接字
 
@@ -681,19 +625,14 @@ private:
 
 输出操作符通常是非成员函数，定义成类的友元
 
+```c
 friend ostream& operator<<(ostream& out, const Sales_item& s)
-
 {
-
-out << s.isbn << "\t" << s.units_sold << "\t"
-
-<< s.revenue << "\t" << s.avg_price();
-
-return out;
-
+    out << s.isbn << "\t" << s.units_sold << "\t"
+    << s.revenue << "\t" << s.avg_price();
+    return out;
 }
-
- 
+```
 
 #### 算术和关系操作
 
@@ -701,129 +640,89 @@ return out;
 
  为了与内置操作符保持一致，加法返回一个右值，而不是一个引用。
 
+```c
 Sales_item operator+(const Sales_item& lhs, const Sales_item& rhs)
 
 {
 
-Sales_item ret(lhs); // copy lhs into a local object that we'll
-
-ret += rhs; // add in the contents of rhs
-
-return ret; // return ret by value
-
+    Sales_item ret(lhs); // copy lhs into a local object that we'll
+    ret += rhs; // add in the contents of rhs
+    return ret; // return ret by value
 }
-
- 
 
 int operator<(const TableIndex2D& right) const;
 
- 
-
 friend bool operator== (const UEContext& info1,const UEContext& info2) const
-
 {
-
-if(info1.ContextID != info2.ContextID) return false;
-
-return true;
-
+    if(info1.ContextID != info2.ContextID) return false;
+    return true;
 ｝
 
- 
-
 friend bool operator!= (const UEContext& info1,const UEContext& info2) const
-
 {
-
-return !(info1 == info2);
-
+	return !(info1 == info2);
 }
-
- 
+```
 
 ### 复制控制
 
 **包括，一个拷贝构造函数，一个赋值运算符，一个析构函数，一对取址运算符**
 
-如果你这么写：class Empty{};
+如果你这么写：`class Empty{};`
 
 和你这么写是一样的：
 
-class Empty {
-
-public:
-
- Empty();            // 缺省构造函数
-
- Empty(const Empty& rhs);    // 拷贝构造函数
-
- 
-
- ~Empty();            // 析构函数 ---- 是否
-
-​                 // 为虚函数看下文说明
-
- Empty& operator=(const Empty& rhs);  // 赋值运算符
-
- 
-
- Empty* operator&();       // 取址运算符
-
- const Empty* operator&() const;
-
+```c
+class Empty 
+{
+    public:
+    Empty();            // 缺省构造函数
+    Empty(const Empty& rhs);    // 拷贝构造函数
+    ~Empty();            // 析构函数 ---- 是否
+             // 为虚函数看下文说明
+     Empty& operator=(const Empty& rhs);  // 赋值运算符
+     Empty* operator&();       // 取址运算符
+     const Empty* operator&() const;
 };
 
- 
-
 Empty(const Empty& rhs)
-
 {
-
-a = rhs.a
-
+    a = rhs.a
 }
+```
 
- 
+
 
 类赋值操作符必须是类的成员，以便编译器可以知道是否需要合成一个, 赋值必须返回对 *this 的引用。
 
 一般而言，赋值操作符与复合赋值操作符应返回操作符的引用
 
+```c
 Guti& Guti::operator=( const Guti& rhs )
-
 {
-
   mtmsi_m = rhs.mtmsi_m;
-
   mmeCode_m = rhs.mmeCode_m;
-
   mmeGid_m = rhs.mmeGid_m;
-
   plmnId_m = rhs.plmnId_m;
-
   return *this;
-
 };
 
 注意，检查对自己赋值的情况
-
 c& c::operator=(const c& rhs)
-
 {
-
  // 检查对自己赋值的情况
-
  if (this == &rhs) return *this;
-
  ...
-
 }
+```
 
  
 
 ### 构造函数初始化式
 
-初始化const对象和引用对象的唯一机会。P389 C++ Primer
+初始化const对象和引用对象的唯一机会。P389 C++ Primer 5th
+
+
 
 ###  协议 
 
@@ -1100,3 +999,7 @@ ptr->z();
 ![Base2 *pb1 = new Derived;  // Derived* Derived:  // Base2 subobject  Base2 *pb2 ](file:///C:/Users/llchan/AppData/Local/Temp/msohtmlclip1/01/clip_image009.png)
 
  
+
+### 参考
+
+[常见C++笔试题](http://blog.csdn.net/dongfengsun/article/details/1541926)
