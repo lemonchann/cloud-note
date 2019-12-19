@@ -4,13 +4,15 @@
 
 ### gdb调试命令
 
-step和next的区别？
+#### step和next的区别？
 
 当前line有函数调用的时候,next会直接执行到下一句 ,step会进入函数.
 
+#### 查看内存
+
 (gdb)p &a //打印变量地址
 
-（gdb）x 0xbffff543 //查看内存单元内变量
+gdb）x 0xbffff543 //查看内存单元内变量
 
 0xbffff543: 0x12345678
 
@@ -18,39 +20,11 @@ step和next的区别？
 
 0xbffff543: 0x78 0x56 0x34 0x12
 
-多线程调试
+#### 多线程调试
 
 (gdb) info threads：查看GDB当前调试的程序的各个线程的相关信息
 
 (gdb) thread threadno：切换当前线程到由threadno指定的线程
-
-查看调用堆栈
-
-(gdb)bt 
-
-(gdb)f 1 简略信息
-
-(gdb)info f 1 详细信息
-
-断点
-
-b test.cpp:11
-
-b test.cpp:main
-
-gdb attach 调试方法：
-
-gdb->file xxxx->attach pid->这时候进程是停止的->c 继续运行
-
- 带参数调试：
-
-输入参数命令set args 后面加上程序所要用的参数，注意，不再带有程序名，直接加参数，如：
-
-(gdb)set args -l a -C abc
-
- info threads                    显示所有线程
-
-thread id                      切换到指定线程
 
 break filename:linenum thread all   在所有线程相应行设置断点，注意如果主线程不会执行到该行，并且启动all-stop模式，主线程执行n或s会切换过去
 
@@ -60,13 +34,41 @@ show scheduler-locking          显示当前模式
 
 thread apply all command        每个线程执行同意命令，如bt。或者thread apply 1 3 bt，即线程1，3执行bt。
 
- list命令
+#### 查看调用堆栈
+
+(gdb)bt 
+
+(gdb)f 1 帧简略信息
+
+(gdb)info f 1 帧详细信息
+
+#### 断点
+
+b test.cpp:11
+
+b test.cpp:main
+
+gdb attach 调试方法：
+
+gdb->file xxxx->attach pid->这时候进程是停止的->c 继续运行
+
+#### 带参数调试：
+
+输入参数命令set args 后面加上程序所要用的参数，注意，不再带有程序名，直接加参数，如：
+
+(gdb)set args -l a -C abc
+
+#### list命令
 
 list　linenum　　显示程序第linenum行的周围的程序
 
 list　function　　显示程序名为function的函数的源程序
 
+
+
 ### static关键字的作用
+
+
 
 ### 软硬链接 
 
