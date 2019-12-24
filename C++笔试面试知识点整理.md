@@ -1,3 +1,5 @@
+写这篇文章是准备了很久，文章是由自己笔试面试腾讯的笔记整理而来，中间工作忙没时间断断续续整理了半个月，才完成现在的样子。主要是针对面试的C++后台开发岗位，涵盖了大部分C++相关的可能会被问到的技术点，作为技术的参考也给需要的人参考。这篇整理没有过多的阐述系统架构和分布式后台服务设计相关，这些面试也会被问到但不在C++技术讨论范围，可以关注专栏后面如果有机会再写相关的介绍。
+
 ### 为什么析构函数要是虚函数？
 
 基类指针可以指向派生类的对象（多态性），如果删除该指针delete []p；就会调用该指针指向的派生类析构函数，而派生类的析构函数又自动调用基类的析构函数，这样整个派生类的对象完全被释放。如果析构函数不被声明成虚函数，则编译器实施静态绑定，在删除基类指针时，只会调用基类的析构函数而不调用派生类析构函数，这样就会造成派生类对象析构不完全。所以，将析构函数声明为虚函数是十分必要的。
@@ -469,37 +471,26 @@ double d = baseP->Item_base::net_price(42);
 
 与基类成员同名的派生类成员将屏蔽对基类成员的直接访问。
 
+```c
 struct Base
-
 {
-
-Base(): mem(0) { }
-
-protected:
-
-int mem;
-
+    Base(): mem(0) { }
+    protected:
+    int mem;
 };
 
 struct Derived : Base 
-
 {
-
-Derived(int i): mem(i) { } // initializes Derived::mem
-
-int get_mem() { return mem; } // returns Derived::mem
-
-protected:
-
-int mem; // hides mem in the base
-
+    Derived(int i): mem(i) { } // initializes Derived::mem
+    int get_mem() { return mem; } // returns Derived::mem
+    protected:
+    int mem; // hides mem in the base
 };
 
 get_mem 中对 mem 的引用被确定为使用 Derived 中的名字。如果编写如下代码：
-
 Derived d(42);
-
 cout << d.get_mem() << endl; // prints 42
+```
 
 则输出将是 42。
 
@@ -507,19 +498,16 @@ cout << d.get_mem() << endl; // prints 42
 
 可以使用作用域操作符访问被屏蔽的基类成员：
 
+```c
 struct Derived : Base 
-
 {
-
-int get_base_mem() { return Base::mem; }
-
+	int get_base_mem() { return Base::mem; }
 };
+```
 
 作用域操作符指示编译器在 Base 中查找 mem。
 
 设计派生类时，只要可能，最好避免与基类数据成员的名字相同
-
- 
 
 #### 类成员函数的重载、覆盖和隐藏区别？
 
@@ -553,15 +541,14 @@ c.“隐藏”是指派生类的函数屏蔽了与其同名的基类函数，规
 
 #### 纯虚函数
 
+```c
 class Disc_item : public Item_base 
 
 {
-
-public:
-
-double net_price(std::size_t) const = 0;
-
+    public:
+    double net_price(std::size_t) const = 0;
 };
+```
 
 含有（或继承）一个或多个纯虚函数的类是抽象基类。除了作
 
@@ -573,53 +560,42 @@ double net_price(std::size_t) const = 0;
 
 #### 函数模板
 
+```c
 template <typename T> 
-
 int compare(const T &v1, const T &v2)
-
 {
-
-if (v1 < v2) return -1;
-
-if (v2 < v1) return 1;
-
-return 0;
-
+    if (v1 < v2) return -1;
+    if (v2 < v1) return 1;
+    return 0;
 }
 
-使用compare(1, 2)
+```
 
- 
+使用compare(1, 2) 
 
 #### 类模板
 
+```c
 template <class Type> class Queue 
 
 {
 
 public:
 
-Queue (); // default constructor
-
-Type &front (); // return element from head of Queue
-
-const Type &front () const;
-
-void push (const Type &); // add element to back of Queue
-
-void pop(); // remove element from head of Queue
-
-bool empty() const; // true if no elements in the Queue
-
-private:
-
-// ...
-
+    Queue (); // default constructor
+    Type &front (); // return element from head of Queue
+    const Type &front () const;
+    void push (const Type &); // add element to back of Queue
+    void pop(); // remove element from head of Queue
+    bool empty() const; // true if no elements in the Queue
+    private:
+    // ...
 };
+```
 
 使用Queue<int> qi;
 
- 
+
 
 ### 操作符重载
 
@@ -794,29 +770,22 @@ chmod
 
 ####  new数组
 
+```c
 int *arr = new int[1024]
-
 delte [] a
-
-\# 堆上new 对象
-
+# 堆上new 对象
 class MyClass
-
 {
-
-MyClass(int a) {};
-
-int empty() {return 0;};
-
+    MyClass(int a) {};
+    int empty() {return 0;};
 };
 
 MyClass *p = new MyClass(1);
-
 delete p;
 
-\# 栈上分配 对象
-
+# 栈上分配 对象
 MyClass test(1);
+```
 
  
 
@@ -860,19 +829,16 @@ new [] operator-如果是类对象，会在首部多申请4字节内存用于保
 
 https://blog.csdn.net/rain_qingtian/article/details/14225211
 
+```c
+
+
 void* p=::operator new (sizeof(Buffer));  ／／创建一块内存；冒号表示全局的new
-
 Buffer* bp= start_cast<Buffer*>(p);  ／／指针进行装换
-
- 
-
 Buffer* buf3=new(bp) Buffer(128);   ／／把bp指针指向的内存租借buf3,
-
 buf3->put('c');
-
 buf3->~Buffer();  //这里析够函数要显示调用
-
 ::operator delete(p);
+```
 
  
 
@@ -892,9 +858,11 @@ c. delete和free同理;new/delete是运算符,malloc/free函数。所以new/dele
 
  
 
-Linux IPC机制汇总: https://www.cnblogs.com/Jimmy1988/p/7744659.html
+#### [Linux IPC机制汇总](https://www.cnblogs.com/Jimmy1988/p/7744659.html)
 
-管道 #include <unistd.h>
+### 管道
+
+ #include <unistd.h>
 
 无名管道： int pipe(int pipedes[2])
 
@@ -902,7 +870,9 @@ Linux IPC机制汇总: https://www.cnblogs.com/Jimmy1988/p/7744659.html
 
  
 
-消息队列 #include <sys/msg.h>
+### 消息队列 
+
+#include <sys/msg.h>
 
 int msgget(key_t key, int msgflg) //创建
 
@@ -914,7 +884,9 @@ ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg) //�
 
  
 
-共享内存 #include <sys/shm.h>
+#### 共享内存 
+
+#include <sys/shm.h>
 
 int shmget(key_t key, size_t size, int shmflg) //创建一个共享内存空间
 
@@ -926,11 +898,11 @@ int shmdt(const void *shmaddr) //将进程与共享内存空间分离 **(****只
 
  
 
-信号 #include</usr/include/bits/signum.h>
+#### 信号
 
- 
+ #include</usr/include/bits/signum.h>
 
- 
+
 
 strcpy
 
