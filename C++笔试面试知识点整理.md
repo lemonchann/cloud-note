@@ -397,7 +397,9 @@ list是由双向链表实现的，因此内存空间是不连续的。
 
 但由于链表的特点，能高效地进行插入和删除。
 
- 
+####  [Vector动态内存分配]( https://blog.csdn.net/xnmc2014/article/details/86748138)
+
+这个问题其实很简单，在调用push_back时，若当前容量已经不能够放入心得元素（capacity=size），那么vector会重新申请一块内存，把之前的内存里的元素拷贝到新的内存当中，然后把push_back的元素拷贝到新的内存中，最后要析构原有的vector并释放原有的内存。所以说这个过程的效率是极低的，为了避免频繁的分配内存，C++每次申请内存都会成倍的增长，例如之前是4，那么重新申请后就是8，以此类推。当然不一定是成倍增长，比如在我的编译器环境下实测是0.5倍增长，之前是4，重新申请后就是6
 
 ### 预处理指令
 
@@ -904,39 +906,26 @@ int shmdt(const void *shmaddr) //将进程与共享内存空间分离 **(****只
 
 
 
-strcpy
+### 手动实现strcpy
 
+```c
 char *strcpy(char *strDest, const char *strSrc)
-
 {
-
-if ( strDest == NULL || strSrc == NULL)
-
-return NULL ;
-
-if ( strDest == strSrc)
-
-return strDest ;
-
-char *tempptr = strDest ;
-
-while( (*strDest++ = *strSrc++) != ‘/0’)
-
-return tempptr ;
-
+    if ( strDest == NULL || strSrc == NULL)
+    return NULL ;
+    if ( strDest == strSrc)
+    return strDest ;
+    char *tempptr = strDest ;
+    while( (*strDest++ = *strSrc++) != ‘/0’)
+    return tempptr ;
 }
+```
 
- 
 
-TinySTL: https://github.com/zouxiaohang/TinySTL/tree/master/TinySTL
 
- 
+### [TinySTL]( https://github.com/zouxiaohang/TinySTL/tree/master/TinySTL)
 
-Vector动态内存分配： https://blog.csdn.net/xnmc2014/article/details/86748138
 
-这个问题其实很简单，在调用push_back时，若当前容量已经不能够放入心得元素（capacity=size），那么vector会重新申请一块内存，把之前的内存里的元素拷贝到新的内存当中，然后把push_back的元素拷贝到新的内存中，最后要析构原有的vector并释放原有的内存。所以说这个过程的效率是极低的，为了避免频繁的分配内存，C++每次申请内存都会成倍的增长，例如之前是4，那么重新申请后就是8，以此类推。当然不一定是成倍增长，比如在我的编译器环境下实测是0.5倍增长，之前是4，重新申请后就是6
-
- 
 
 虚函数多态机制
 
