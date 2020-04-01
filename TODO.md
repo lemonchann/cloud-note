@@ -54,7 +54,7 @@ Go语言写的HTTP web服务框架。[中文文档](https://github.com/skyhee/gi
 
 #### 常见的RPC框架和各自特点
 
-> Dubbo 是阿里巴巴公司开源的一个Java高性能优秀的服务框架，使得应用可通过高性能的 RPC 实现服务的输出和输入功能，可以和 Spring框架无缝集成。
+> Dubbo 是阿里巴巴公司开源的一个Java高性能优秀的服务框架，使得应用可通过高性能的 RPC 实现服务的输出和输入功能，可以和 Spring框架无缝集成。 Apache Dubbo |ˈdʌbəʊ| 是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现 
 
 > Motan是新浪微博开源的一个Java 框架。它诞生的比较晚，起于2013年，2016年5月开源。Motan 在微博平台中已经广泛应用，每天为数百个服务完成近千亿次的调用。
 
@@ -66,11 +66,21 @@ Go语言写的HTTP web服务框架。[中文文档](https://github.com/skyhee/gi
 
 > brpc(baidu-rpc)是百度开发一款远过程调用网络框架。目前该项目已在github上开源，brpc目前被应用于百度公司内部各种核心业务上，其中包括高性能计算和模型训练和各种索引和排序服务，且有超过100万以上个实例是基于brpc工作的。
 
-> Tars 是腾讯根据内部多年使用微服务架构的实践，总结而成的开源项目，仅支持 C++ 语言，目前在腾讯内部应用也非常广泛。
+>  Tars 是将腾讯内部使用的微服务架构 TAF（Total Application Framework）多年的实践成果总结而成的开源项目。 仅支持 C++ 语言，目前在腾讯内部应用也非常广泛。 
 
 其中关于brpc在知乎有个很好的问题，其中有包括大神戈君(brpc主导者)在内的多个回答，可以帮助我们快速了解brpc框架：[如何评价百度开源的 RPC 框架 brpc？](https://www.zhihu.com/question/65370268)
 
 **tars和brpc是非常不错的开源项目，尤其作为C++程序员很推荐阅读。后面一定要写一下gRPC、brpc、tars，先占个坑。**
+
+#### [zookeeper和dubbo的关系](https://segmentfault.com/a/1190000016349824)
+
+ Dubbo的将注册中心进行抽象，是得它可以外接不同的存储媒介给注册中心提供服务，有ZooKeeper，Memcached，Redis等。  在 Dubbo 官方推荐使用 Zookeeper 就担任了注册中心这一角色。
+
+ ![preview](https://segmentfault.com/img/remote/1460000016349828/view) 
+
+
+
+ 
 
 ### 何为中间件？
 
@@ -88,11 +98,47 @@ Go语言写的HTTP web服务框架。[中文文档](https://github.com/skyhee/gi
 
 ### 架构师学什么？
 
+ [**什么是RESTful**](https://www.ruanyifeng.com/blog/2011/09/restful.html) 
 
+#### 服务治理
+
+#### 微服务
+
+[浅谈微服务和服务治理](https://blog.csdn.net/suifeng3051/article/details/53992560)
+
+ 微服务架构风格是一种将单个应用程序作为一套小型服务开发的方法，每种应用程序都在自己的进程中运行，并与轻量级机制（通常是HTTP资源API）进行通信。 这些服务是围绕业务功能构建的，可以通过全自动部署机制独立部署。 这些服务的集中管理最少，可以用不同的编程语言编写，并使用不同的数据存储技术。 
+
+[微服务架构选型](https://www.infoq.cn/article/micro-service-technology-stack)
+
+ ![微服务架构技术栈选型手册](https://static001.infoq.cn/resource/image/31/d1/311cb272432eea1b08d9fa45a3094ed1.png) 
+
+ ![微服务架构技术栈选型手册](https://static001.infoq.cn/resource/image/7d/a8/7d7baf3c1e15265d1b576ca9b029a8a8.png) 
+
+#### [篇文章快速理解微服务架构](http://dockone.io/article/3687)
+
+#### 过载保护
+
+> 接口限流、服务降级、服务熔断、服务隔离
+
+#### [DevOps](https://www.redhat.com/zh/topics/devops)
+
+“DevOps”一词是由英文 Development（开发）和 Operations （运维）组合而成， DevOps 是指对企业文化、业务自动化和平台设计等方面进行全方位变革，从而实现迅捷、优质的服务交付，提升企业响应能力和价值。只有通过快速迭代的 IT 服务交付，这一切才能实现。DevOps 可以将传统应用和最新的云原生应用与基础架构彼此相连。 
+
+#### SOA 面向服务的架构  service-oriented architecture 
+
+#### 什么是 Tomcat 
+
+#### 什么是nginx
 
 ## 读书
 
+[finy推荐书单](http://mp.weixin.qq.com/s?__biz=MzI5NzY0MjgwOQ==&mid=2247484315&idx=1&sn=ea72622e463d89071591766e29030d66&chksm=ecb0bdcddbc734db1c80e4e10be3c75da6df44fe933515dd004cbd308c1febc9b2f364ac6072&mpshare=1&scene=1&srcid=&sharer_sharetime=1584106135409&sharer_shareid=c71e0673fbaa15e3038063afecc3a033#rd)
+
 ### 《高性能MySQL》
 
+### 《web性能权威指南》
+
 ### 《大型网站技术架构与核心原理案例分析》
+
+### 《 **微服务架构设计模式** 》
 
