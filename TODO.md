@@ -114,11 +114,11 @@ Go语言写的HTTP web服务框架。[中文文档](https://github.com/skyhee/gi
 
  ![微服务架构技术栈选型手册](https://static001.infoq.cn/resource/image/7d/a8/7d7baf3c1e15265d1b576ca9b029a8a8.png) 
 
-#### [篇文章快速理解微服务架构](http://dockone.io/article/3687)
+#### [一篇文章快速理解微服务架构](http://dockone.io/article/3687)
 
-#### 过载保护
+#### 服务容错
 
-> 接口限流、服务降级、服务熔断、服务隔离
+[雪崩](https://www.cnblogs.com/li-peng/p/10997140.html)、超时、接口限流、服务降级、服务熔断、服务隔离
 
 #### [DevOps](https://www.redhat.com/zh/topics/devops)
 
@@ -129,6 +129,16 @@ Go语言写的HTTP web服务框架。[中文文档](https://github.com/skyhee/gi
 #### 什么是 Tomcat 
 
 #### 什么是nginx
+
+#### 什么是k8s
+
+ https://jimmysong.io/kubernetes-handbook/   Kubernetes Handbook——Kubernetes中文指南/云原生应用架构实践手册
+
+[Kubernetes](https://kubernetes.io/)是Google基于[Borg](https://research.google.com/pubs/pub43438.html)开源的容器编排调度引擎，作为[CNCF](https://cncf.io/)（Cloud Native Computing Foundation）最重要的组件之一，它的目标不仅仅是一个编排系统，而是提供一个规范，可以让你来描述集群的架构，定义服务的最终状态，Kubernetes可以帮你将系统自动地达到和维持在这个状态。**Kubernetes作为云原生应用的基石**，相当于一个云操作系统，其重要性不言而喻。
+
+云原生技术有利于各组织在公有云、私有云和混合云等新型动态环境中，构建和运行可弹性扩展的应用。云原生的代表技术包括**容器**、**服务网格**、**微服务**、**不可变基础设施**和**声明式API**。这些技术能够构建容错性好、易于管理和便于观察的松耦合系统。结合可靠的自动化手段，云原生技术使工程师能够轻松地对系统作出频繁和可预测的重大变更。——CNCF（云原生计算基金会）。
+
+
 
 ## 读书
 
