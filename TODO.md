@@ -6,13 +6,61 @@
 
 ### Golang和协程
 
+1. https://tour.go-zh.org/ go语言之旅 官方入门教程。边打边学。强力推荐
+2. https://books.studygolang.com/gopl-zh/ go语言圣经。
+3. https://chai2010.gitbooks.io/advanced-go-programming-book/content/ go语言高级编程 。针对特定领域感兴趣的看。
+4. https://gfw.go101.org/article/101.html go语言101.一些语法底层实现。
+
+---
+
+
+
+1.入门
+go语言圣经 http://shouce.jb51.net/gopl-zh/index.html
+学习基本语法和go语言的一些特性，C-like的语言相信一两天就可以入门，看的过程中有不太理解的地方记录下来就行。
+
+2.练习
+go by example https://gobyexample.com/
+强烈推荐看的过程中自己也写一遍，想象这些例子都使用了哪些golang的特性，例子也不多但都实用。
+
+3.实战
+《go语言实战》看看项目中怎样使用golang
+
+4.高并发
+《go高并发编程》 介绍go的高并发原理，教你怎样一步一步写出高性能的并发程序
+
+5.网络编程
+《go web编程》比较繁琐，但会比较详细地介绍golang的网络编程实现，包括一些原生库设计和实现的原理。
+
+---
+
+
+
+ 使用示例：https://gobyexample.com/
+书籍PDF：https://github.com/KeKe-Li/book#golang
+Go 开发者路线图：https://github.com/Quorafind/golang-developer-roadmap-cn
+Go 高分优秀中文项目：https://github.com/kon9chunkit/GitHub-Chinese-Top-Charts#Go
+在学习过程中收藏的，供参考~ 
+
+---
+
+
+
 ### 容器技术
 
 #### RPC框架brpc tars gRPC （有道云笔记有记录）
 
 #### docker
 
+#### redis安装使用  桌面客户端redisclient-win32.x86.2.0
+
 #### k8s
+
+### 数据结构
+
+#### 跳表
+
+#### 红黑树
 
 ### mongodb和redis差别
 
@@ -26,7 +74,7 @@
 
 ### linux内存管理
 
-slab是什么？
+### slab是什么？
 
 ### Python的库学习去哪查资料？官网？
 
@@ -52,7 +100,13 @@ slab是什么？
 
 [Gin](https://github.com/gin-gonic/gin)
 
-Go语言写的HTTP web服务框架。[中文文档](https://github.com/skyhee/gin-doc-cn)
+Go语言写的 HTTP web服务框架。[中文文档](https://github.com/skyhee/gin-doc-cn)
+
+#### zookeeper
+
+####  Consul  
+
+
 
  
 
@@ -110,6 +164,8 @@ Go语言写的HTTP web服务框架。[中文文档](https://github.com/skyhee/gi
 
 #### 什么是k8s
 
+
+
  https://jimmysong.io/kubernetes-handbook/   Kubernetes Handbook——Kubernetes中文指南/云原生应用架构实践手册
 
 [Kubernetes](https://kubernetes.io/)是Google基于[Borg](https://research.google.com/pubs/pub43438.html)开源的容器编排调度引擎，作为[CNCF](https://cncf.io/)（Cloud Native Computing Foundation）最重要的组件之一，它的目标不仅仅是一个编排系统，而是提供一个规范，可以让你来描述集群的架构，定义服务的最终状态，Kubernetes可以帮你将系统自动地达到和维持在这个状态。**Kubernetes作为云原生应用的基石**，相当于一个云操作系统，其重要性不言而喻。
@@ -129,4 +185,6 @@ Go语言写的HTTP web服务框架。[中文文档](https://github.com/skyhee/gi
 ### 《大型网站技术架构与核心原理案例分析》
 
 ### 《 **微服务架构设计模式** 》
+
+### 《 深入理解LINUX内核 》
 
