@@ -6,6 +6,12 @@
 
 ### Golang和协程
 
+#### 资源
+
+包中文介绍  https://wizardforcel.gitbooks.io/golang-stdlib-ref/content/114.html 
+
+#### 路线
+
 1. https://tour.go-zh.org/ go语言之旅 官方入门教程。边打边学。强力推荐
 2. https://books.studygolang.com/gopl-zh/ go语言圣经。
 3. https://chai2010.gitbooks.io/advanced-go-programming-book/content/ go语言高级编程 。针对特定领域感兴趣的看。
@@ -52,7 +58,7 @@ Go 高分优秀中文项目：https://github.com/kon9chunkit/GitHub-Chinese-Top-
 
 #### docker
 
-#### redis安装使用  桌面客户端redisclient-win32.x86.2.0
+#### redis安装使用  桌面客户端 redisclient-win32.x86.2.0
 
 #### k8s
 
